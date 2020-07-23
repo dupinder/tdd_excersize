@@ -1,11 +1,8 @@
 package doc.tdd;
 
 import doc.tdd.calculator.Calculator;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -81,12 +78,35 @@ public class CalculatorTest {
         }
     }
 
+    @Test
+    public void IgnoreBiggerNumber() throws NegativeNumberNotAllowed {
+        int sum = cal.add("2, 1000");
+        assertEquals(2, sum);
+    }
 
     @Test
+    public void customDelimiterMoreThanOneChar() throws NegativeNumberNotAllowed {
+        int sumCustomDelimiter = cal.add("//;;;\\n1;;;2");
+        assertEquals(sumCustomDelimiter, 3);
+    }
+
+
+    @Test
+    public void MultipleCustomDelimiter() throws NegativeNumberNotAllowed {
+        int sumCustomDelimiter = cal.add("//[*][#]\\n1*2#3");
+        assertEquals(sumCustomDelimiter, 6);
+    }
+
+    @Test
+    public void MultiLengthMultipleCustomDelimiter() throws NegativeNumberNotAllowed {
+        int sumCustomDelimiter = cal.add("//[**][##]\\n1**2##3");
+        assertEquals(sumCustomDelimiter, 6);
+    }
+    /*@Test
     @AfterAll
     public static void testGetCalledCount(){
        int count = cal.getCalledCount();
-       assertEquals(12, count);
-    }
+       assertEquals(13, count);
+    }*/
 
 }
